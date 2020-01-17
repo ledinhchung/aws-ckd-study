@@ -19,10 +19,10 @@ export class EcsTestStack extends cdk.Stack {
 
     const ecs_patterns = new ecsPattens.ApplicationLoadBalancedFargateService(this, 'FirstFargateService', {
       cluster,
-      cpu: 512,
-      memoryLimitMiB: 1024,
+      cpu: 256,
+      memoryLimitMiB: 512,
       publicLoadBalancer: true,
-      desiredCount: 4,
+      desiredCount: 2,
       taskImageOptions: { image: ecs.ContainerImage.fromRegistry("nginx") }
     });
   }
