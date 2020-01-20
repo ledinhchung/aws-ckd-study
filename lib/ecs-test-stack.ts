@@ -3,17 +3,16 @@ import * as ec2 from '@aws-cdk/aws-ec2';
 import * as ecs from '@aws-cdk/aws-ecs';
 import * as ecsPattens from '@aws-cdk/aws-ecs-patterns'
 
+import { NetworkStack } from './network-stack';
+
 export class EcsTestStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const vpc = new ec2.Vpc(this, 'ecs-vpc', {
-      maxAzs: 3,
-      cidr: '172.10.0.0/24',
-    });
+    const network = new NetworkStack(this);
 
     const cluster = new ecs.Cluster(this, 'EcsCluster', {
-      vpc,
+      vpc: network.vpc,
       clusterName: 'EcsCluster'
     });
 
